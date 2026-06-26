@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ponto Web - Controle de Horas</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<section class="auth-screen" id="auth-screen">
+    <div class="auth-panel">
+        <div class="logo auth-logo" aria-label="Ponto Web">
+            <span class="logo-icon">PW</span>
+            <span class="logo-text">Ponto Web</span>
+        </div>
+
+        <div class="auth-tabs" aria-label="Acesso">
+            <button class="auth-tab active" type="button" data-auth-mode="login">Entrar</button>
+            <button class="auth-tab" type="button" data-auth-mode="register">Criar conta</button>
+        </div>
+
+        <form class="auth-form" id="auth-form">
+            <label class="auth-field auth-name-field" for="auth-name">
+                Nome
+                <input type="text" id="auth-name" autocomplete="name">
+            </label>
+
+            <label class="auth-field" for="auth-email">
+                E-mail
+                <input type="email" id="auth-email" autocomplete="email" required>
+            </label>
+
+            <label class="auth-field" for="auth-password">
+                Senha
+                <input type="password" id="auth-password" autocomplete="current-password" required>
+            </label>
+
+            <button class="save-btn auth-submit" type="submit" id="auth-submit">Entrar</button>
+            <div class="auth-msg" id="auth-msg"></div>
+        </form>
+    </div>
+</section>
+
+<aside class="sidebar">
+    <div class="logo" aria-label="Ponto Web">
+        <span class="logo-icon">PW</span>
+        <span class="logo-text">Ponto Web</span>
+    </div>
+
+    <nav class="nav" aria-label="Navegação principal">
+        <button class="nav-item active" type="button" data-tab="registro">Registro</button>
+        <button class="nav-item" type="button" data-tab="resumo">Resumo</button>
+        <button class="nav-item" type="button" data-tab="config">Configurações</button>
+    </nav>
+
+    <div class="sidebar-footer">
+        <div class="user-widget">
+            <div>
+                <div class="balance-label">Usuário</div>
+                <strong id="current-user-name">-</strong>
+            </div>
+            <button class="logout-btn" type="button" id="btn-logout">Sair</button>
+        </div>
+
+        <div class="balance-widget">
+            <div class="balance-label">Saldo Geral</div>
+            <div class="balance-value saldo-zero" id="sidebar-balance-val">0min</div>
+        </div>
+    </div>
+</aside>
+
+<main class="main">
+
+    <section class="tab-content active" id="tab-registro">
+        <header class="page-header">
+            <div>
+                <p class="eyebrow">Registro mensal</p>
+                <h1 class="month-title" id="month-title"></h1>
+            </div>
+
+            <div class="header-actions">
+                <div class="month-controls" aria-label="Navegar entre meses">
+                    <button class="icon-btn" type="button" id="btn-prev-month" title="Mês anterior">‹</button>
+                    <button class="today-btn" type="button" id="btn-current-month">Mês atual</button>
+                    <button class="icon-btn" type="button" id="btn-next-month" title="Próximo mês">›</button>
+                </div>
+                <button class="export-btn" type="button" id="btn-export">Exportar CSV</button>
+            </div>
+        </header>
+
+        <div class="summary-strip" aria-label="Resumo do mês">
+            <div class="metric">
+                <span class="metric-label">Previsto</span>
+                <strong id="month-expected">0h</strong>
+            </div>
+            <div class="metric">
+                <span class="metric-label">Trabalhado</span>
+                <strong id="month-worked">0h</strong>
+            </div>
+            <div class="metric">
+                <span class="metric-label">Saldo do mês</span>
+                <strong id="month-balance" class="saldo-zero">0min</strong>
+            </div>
+            <div class="metric">
+                <span class="metric-label">Atraso no mês</span>
+                <strong id="month-delay" class="saldo-zero">0min</strong>
+            </div>
+            <div class="metric">
+                <span class="metric-label">Dias preenchidos</span>
+                <strong id="month-filled">0</strong>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <table class="ponto-table">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>Dia</th>
+                        <th>Previsto</th>
+                        <th>Horas trabalhadas</th>
+                        <th>Saldo</th>
+                        <th>Atraso</th>
+                        <th>Observação</th>
+                        <th>Ação</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body"></tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="tab-content" id="tab-resumo">
+        <header class="page-header">
+            <div>
+                <p class="eyebrow">Visão anual</p>
+                <h1 class="month-title" id="summary-title">Resumo Anual</h1>
+            </div>
+            <button class="export-btn" type="button" id="btn-export-year">Exportar ano</button>
+        </header>
+
+        <div class="summary-strip annual">
+            <div class="metric">
+                <span class="metric-label">Saldo no ano</span>
+                <strong id="year-balance" class="saldo-zero">0min</strong>
+            </div>
+            <div class="metric">
+                <span class="metric-label">Trabalhado no ano</span>
+                <strong id="year-worked">0h</strong>
+            </div>
+            <div class="metric">
+                <span class="metric-label">Atraso no ano</span>
+                <strong id="year-delay" class="saldo-zero">0min</strong>
+            </div>
+            <div class="metric">
+                <span class="metric-label">Dias registrados</span>
+                <strong id="year-days">0</strong>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <table class="ponto-table">
+                <thead>
+                    <tr>
+                        <th>Mês</th>
+                        <th>Previsto</th>
+                        <th>Trabalhado</th>
+                        <th>Saldo</th>
+                        <th>Atraso</th>
+                        <th>Dias registrados</th>
+                    </tr>
+                </thead>
+                <tbody id="summary-body"></tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="tab-content" id="tab-config">
+        <header class="page-header">
+            <div>
+                <p class="eyebrow">Preferências</p>
+                <h1 class="month-title">Configurações</h1>
+            </div>
+        </header>
+
+        <div class="config-card">
+            <div class="config-row">
+                <label for="cfg-tolerancia">Tolerância de saldo</label>
+                <div class="input-with-unit">
+                    <input type="number" id="cfg-tolerancia" value="10" min="0" max="120" step="1">
+                    <span>min</span>
+                </div>
+            </div>
+
+            <div class="config-row">
+                <label for="cfg-seg-qui">Carga de segunda a quinta</label>
+                <div class="input-with-unit">
+                    <input type="number" id="cfg-seg-qui" value="9" min="0" max="12" step="0.25" disabled>
+                    <span>h</span>
+                </div>
+            </div>
+
+            <div class="config-row">
+                <label for="cfg-sexta">Carga de sexta-feira</label>
+                <div class="input-with-unit">
+                    <input type="number" id="cfg-sexta" value="8" min="0" max="12" step="0.25" disabled>
+                    <span>h</span>
+                </div>
+            </div>
+
+            <button class="save-btn" type="button" id="btn-save-cfg">Salvar configurações</button>
+            <div class="save-msg" id="cfg-msg">Configurações salvas.</div>
+        </div>
+    </section>
+
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>
