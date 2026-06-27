@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const { initializeDatabase } = require('./db');
 const authRoutes = require('./routes/auth');
 const recordRoutes = require('./routes/records');
 
@@ -26,6 +27,14 @@ app.use((err, req, res, next) => {
     res.status(500).json({ error: 'Erro interno do servidor.' });
 });
 
-app.listen(PORT, () => {
-    console.log(`Ponto Web rodando em http://127.0.0.1:${PORT}`);
-});
+initializeDatabase()
+    .then(() => {
+        app.listen(PORT, () => {
+            console.log(`Ponto Web rodando em http://127.0.0.1:${PORT}`);
+        });
+    })
+    .catch(error => {
+        console.error('Não foi possível iniciar o banco de dados.');
+        console.error(error.message);
+        process.exit(1);
+    });
