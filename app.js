@@ -33,6 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const monthDelay = document.getElementById('month-delay');
     const monthFilled = document.getElementById('month-filled');
     const sidebarBalance = document.getElementById('sidebar-balance-val');
+    const sidebarCurrentMonthBalance = document.getElementById('sidebar-current-month-val');
 
     const yearBalance = document.getElementById('year-balance');
     const yearWorked = document.getElementById('year-worked');
@@ -335,6 +336,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function updateTotals() {
         const monthStats = getMonthStats(currentDate.getFullYear(), currentDate.getMonth());
+        const today = new Date();
+        const currentMonthStats = getMonthStats(today.getFullYear(), today.getMonth());
         const yearStats = getYearStats(currentDate.getFullYear());
         const allBalance = Object.entries(records).reduce((total, [dateStr, record]) => {
             const date = new Date(`${dateStr}T00:00:00`);
@@ -351,6 +354,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         sidebarBalance.textContent = formatBalance(allBalance);
         applyBalanceClass(sidebarBalance, allBalance);
+        sidebarCurrentMonthBalance.textContent = formatBalance(currentMonthStats.balance);
+        applyBalanceClass(sidebarCurrentMonthBalance, currentMonthStats.balance);
 
         yearBalance.textContent = formatBalance(yearStats.balance);
         yearWorked.textContent = formatDuration(yearStats.worked);

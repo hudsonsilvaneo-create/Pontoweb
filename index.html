@@ -63,9 +63,15 @@
             <button class="logout-btn" type="button" id="btn-logout">Sair</button>
         </div>
 
-        <div class="balance-widget">
-            <div class="balance-label">Saldo Geral</div>
-            <div class="balance-value saldo-zero" id="sidebar-balance-val">0min</div>
+        <div class="balance-widget balance-stack">
+            <div class="balance-row">
+                <div class="balance-label">Mês atual</div>
+                <div class="balance-value saldo-zero" id="sidebar-current-month-val">0min</div>
+            </div>
+            <div class="balance-row">
+                <div class="balance-label">Total acumulado</div>
+                <div class="balance-value saldo-zero" id="sidebar-balance-val">0min</div>
+            </div>
         </div>
     </div>
 </aside>
